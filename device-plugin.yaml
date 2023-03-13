@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: demo_device_plugin
-  namespace: kube-system
+  name: demo-device-plugin
+  namespace: default
   labels:
-    app.kubernetes.io/name: demo_device_plugin
+    app.kubernetes.io/name: demo-device-plugin
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: demo_device_plugin
+      app.kubernetes.io/name: demo-device-plugin
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: demo_device_plugin
+        app.kubernetes.io/name: demo-device-plugin
     spec:
       containers:
-      - image: demo_device_plugin
-        name: demo_device_plugin
+      - image: demo-device-plugin
+        name: demo-device-plugin
         resources:
           requests:
             cpu: 50m

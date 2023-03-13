@@ -65,7 +65,7 @@ func (p *Plugin) ListAndWatch(e *pluginapi.Empty, s pluginapi.DevicePlugin_ListA
 	p.Devices = GetDevices()
 
 	// get all kube devices
-	kubeDevices := make([]*pluginapi.Device, len(p.Devices))
+	kubeDevices := []*pluginapi.Device{}
 	{
 		for id := range p.Devices {
 			dev := &pluginapi.Device{
@@ -78,15 +78,16 @@ func (p *Plugin) ListAndWatch(e *pluginapi.Empty, s pluginapi.DevicePlugin_ListA
 
 	// send all devices to kubelet
 	s.Send(&pluginapi.ListAndWatchResponse{Devices: kubeDevices})
+	glog.Info("Send all devices info")
 
 	// watch device health status and report
 	{
 		// mock device unhealth
 		func() {
-			ticker := time.NewTicker(20 * time.Second)
+			ticker := time.NewTicker(10 * time.Second)
 			for {
 				<-ticker.C
-				devIndex := rand.Intn(len(kubeDevices) + 1)
+				devIndex := rand.Intn(len(kubeDevices))
 				isHealth := rand.Intn(2) == 1
 				currentHealth := pluginapi.Healthy
 				if !isHealth {
@@ -96,6 +97,7 @@ func (p *Plugin) ListAndWatch(e *pluginapi.Empty, s pluginapi.DevicePlugin_ListA
 
 				// report
 				s.Send(&pluginapi.ListAndWatchResponse{Devices: kubeDevices})
+				glog.Infof("Health state changed, device id: %s, status: %s", kubeDevices[devIndex].ID, kubeDevices[devIndex].Health)
 			}
 		}()
 

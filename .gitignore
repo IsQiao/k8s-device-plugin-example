@@ -1,1 +1,3 @@
 demo_device_plugin
+device-plugin.dev.yaml
+deploy.sh

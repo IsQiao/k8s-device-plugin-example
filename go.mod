@@ -6,7 +6,7 @@ require k8s.io/kubelet v0.26.2
 
 require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
+	github.com/golang/glog v1.0.0
 )
 
 require (

@@ -1,5 +1,5 @@
 BINARY_NAME=demo_device_plugin
-DOCKER_IMAGE_NAME=demo_device_plugin
+DOCKER_IMAGE_NAME=demo-device-plugin
 DOCKER_IMAGE_LATEST="$(DOCKER_IMAGE_NAME):latest"
 
 build-linux:
